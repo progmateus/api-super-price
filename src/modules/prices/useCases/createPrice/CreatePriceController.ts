@@ -7,8 +7,8 @@ class CreatePriceController {
 
     async handle(request: Request, response: Response): Promise<Response> {
         const {
-            product_id,
-            supermarket_id,
+            gtin,
+            supermarket_name,
             price } = request.body;
 
         const { id } = request.user;
@@ -18,8 +18,8 @@ class CreatePriceController {
         const createPriceUseCase = container.resolve(CreatePriceUseCase);
 
         const priceCreated = await createPriceUseCase.execute({
-            product_id,
-            supermarket_id,
+            gtin,
+            supermarket_name,
             user_id: id,
             price
         })

@@ -21,9 +21,10 @@ class CreateProductUseCase {
     async execute({
         name,
         gtin,
-        brand,
+        brand = "Não informado",
         thumbnail,
     }: ICreateProductDTO): Promise<Product> {
+
 
         if (gtin.length > 50) {
             throw new AppError("Character limit exceeded", 400)
@@ -40,6 +41,7 @@ class CreateProductUseCase {
         if (product) {
             throw new AppError("Product already exists!", 409)
         }
+
 
         const productCreated = await this.productsRepository.create({
             name: name.toLowerCase(),

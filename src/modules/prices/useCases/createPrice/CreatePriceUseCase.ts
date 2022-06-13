@@ -2,9 +2,11 @@ import { AppError } from "@errors/AppError";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { Price } from "@modules/prices/infra/typeorm/entities/Price";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
+import { FindProductByGtinUseCase } from "@modules/products/useCases/findProductByGtin/FindProductByGtinUseCase";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
+import { CreateSupermarketUseCase } from "@modules/supermarkets/useCases/CreateSupermarket/CreateSupermarketUseCase";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
-import { inject, injectable } from "tsyringe";
+import { container, inject, injectable } from "tsyringe";
 import { ICreatePriceDTO } from "../../dtos/ICreatePriceDTO";
 import { IPricesRepository } from "../../repositories/IPricesRepository";
 
@@ -31,47 +33,37 @@ class CreatePriceUseCase {
     ) { }
 
     async execute({
-        product_id,
-        supermarket_id,
+        gtin,
+        supermarket_name,
         user_id,
         price
-    }: ICreatePriceDTO): Promise<Price> {
-
-        if (product_id.length > 50) {
-            throw new AppError("Character limit exceeded", 400)
-        }
-
-        if (supermarket_id.length > 50) {
-            throw new AppError("Character limit exceeded", 400)
-        }
-
-        if (user_id.length > 50) {
-            throw new AppError("Character limit exceeded", 400)
-        }
-
-        if (await this.validateProvider.uuidValidateV4(product_id) === false) {
-            throw new AppError("Invalid product uuid")
-        }
-
-        if (await this.validateProvider.uuidValidateV4(supermarket_id) === false) {
-            throw new AppError("Invalid supermarket uuid")
-        }
+    }): Promise<Price> {
 
         if (await this.validateProvider.uuidValidateV4(user_id) === false) {
             throw new AppError("Invalid user uuid")
         }
 
-        const product = await this.productsRepository.findById(product_id);
-        if (!product) {
-            throw new AppError("Product does not exists", 404);
+        const findProductByGtinUseCase = container.resolve(FindProductByGtinUseCase)
+        const createSupermarketUseCase = container.resolve(CreateSupermarketUseCase);
+
+        const product = await findProductByGtinUseCase.execute(gtin)
+
+
+        const supermarketLowerCase = supermarket_name.toLowerCase()
+
+
+        let supermarket = await this.supermarketsRepository.findByName(supermarketLowerCase);
+
+
+
+        if (!supermarket) {
+
+            supermarket = await createSupermarketUseCase.execute({ name: supermarket_name })
         }
 
-        const supermarket = await this.supermarketsRepository.findById(supermarket_id);
-        if (!supermarket) {
-            throw new AppError("Supermarket does not exists", 404);
-        }
 
         const user = await this.usersRepository.findById(user_id);
+
         if (!user) {
             throw new AppError("User does not exists", 404);
         }
@@ -81,8 +73,8 @@ class CreatePriceUseCase {
         }
 
         const priceAlreadyExists = await this.pricesRepository.findBySupermarketIdAndProductId(
-            supermarket_id,
-            product_id
+            supermarket.id,
+            product.id
         );
 
         if (priceAlreadyExists) {
@@ -92,8 +84,8 @@ class CreatePriceUseCase {
         const priceFormatted = Number(price.toFixed(2));
 
         const priceCreated = await this.pricesRepository.create({
-            product_id,
-            supermarket_id,
+            product_id: product.id,
+            supermarket_id: supermarket.id,
             user_id,
             price: priceFormatted
         })

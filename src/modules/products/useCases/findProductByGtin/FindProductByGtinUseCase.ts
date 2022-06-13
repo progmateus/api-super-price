@@ -40,10 +40,11 @@ class FindProductByGtinUseCase {
 
                     product = await createProductUseCase.execute({
                         name: getProduct.data.description,
-                        brand: getProduct.data.brand.name,
-                        gtin: getProduct.data.gtins[0].gtin,
+                        brand: getProduct.data.brand?.name,
+                        gtin: getProduct.data.gtin,
                         thumbnail: getProduct.data.thumbnail
                     });
+
                     break;
 
                 case 404:

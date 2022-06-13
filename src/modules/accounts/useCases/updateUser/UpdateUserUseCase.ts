@@ -50,8 +50,6 @@ class UpdateUserUseCase {
             throw new AppError("User does not exists", 404)
         }
 
-        console.log(user)
-
         if (name) {
             const nameLowerCase = name.toLowerCase();
             const isValidName = this.validateProvider.validateName(nameLowerCase);
@@ -75,9 +73,6 @@ class UpdateUserUseCase {
 
             await this.usersRepository.update(user)
         }
-
-
-
 
 
         if (email) {
@@ -109,7 +104,7 @@ class UpdateUserUseCase {
             const passwordMatch = await compare(last_password, user.password);
 
             if (!passwordMatch) {
-                throw new AppError("last password incorrect!", 401)
+                throw new AppError("last password incorrect!", 400)
             }
 
             user.password = await hash(password, 8);
