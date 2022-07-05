@@ -41,8 +41,8 @@ class ProductsRepository implements IProductsRepository {
     }
     async findByName(name: string): Promise<Product[]> {
         const productsQuery = await this.repository.createQueryBuilder("products")
-        productsQuery.where("name like :name", { name: `%${name}%` })
 
+        productsQuery.where("name like :name", { name: `%${name}%` })
         const products = await productsQuery.getMany();
 
         return products;

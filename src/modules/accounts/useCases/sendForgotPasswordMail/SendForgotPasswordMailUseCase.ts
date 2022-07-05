@@ -7,6 +7,7 @@ import { inject, injectable } from "tsyringe";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/IMailProvider";
 import { template } from "handlebars";
+import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
 
 
 
@@ -24,7 +25,10 @@ class SendForgotPasswordMailUseCase {
         private dateProvider: IDateProvider,
 
         @inject("EtherealMailProvider")
-        private mailProvider: IMailProvider
+        private mailProvider: IMailProvider,
+
+        @inject("ValidateProvider")
+        private validateProvider: IValidateProvider
 
     ) { }
 
@@ -32,6 +36,14 @@ class SendForgotPasswordMailUseCase {
 
         if (email.length > 80) {
             throw new AppError("Character limit exceeded", 400)
+        }
+
+        const emailLoweCase = email.toLocaleLowerCase()
+
+        const isValidEmail = this.validateProvider.ValidateEmail(emailLoweCase)
+
+        if (isValidEmail === false) {
+            throw new AppError("Invalid email", 400)
         }
 
         const templatePath = resolve(
@@ -43,7 +55,7 @@ class SendForgotPasswordMailUseCase {
             "forgotPassword.hbs"
         )
 
-        const user = await this.usersRepository.findByEmail(email);
+        const user = await this.usersRepository.findByEmail(emailLoweCase);
 
         if (!user) {
             throw new AppError("User does not exists!", 404)
@@ -65,7 +77,7 @@ class SendForgotPasswordMailUseCase {
         }
 
         await this.mailProvider.sendMail(
-            email,
+            emailLoweCase,
             "Recuperação de senha",
             variables,
             templatePath

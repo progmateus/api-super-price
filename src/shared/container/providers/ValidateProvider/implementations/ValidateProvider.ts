@@ -22,21 +22,24 @@ class ValidateProvider implements IValidateProvider {
             if(isValidEmail === false){
                 return false
             } */
+
+
         const emailRegex = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;
         const validateEmail = emailRegex.test(email);
 
-        /*  if (validateEmail === null) {
-              return false
-          }
-  
-          if (validateEmail.index === 0) {
-              return true
-          }
-  
-          if (validateEmail.index !== 0) {
-              return false
-          } */
+        // const validateEmailExec = emailRegex.exec(email)
 
+        // if (validateEmailExec === null) {
+        //     return false
+        // }
+
+        // if (validateEmailExec.index === 0) {
+        //     return true
+        // }
+
+        // if (validateEmailExec.index !== 0) {
+        //     return false
+        // }
 
         const badCharactersRegex = /[!#$%&'*()+`{|}~]/g;
         const validEmail = badCharactersRegex.test(email);

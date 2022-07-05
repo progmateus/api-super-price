@@ -4,8 +4,6 @@ import { IProductsRepository } from "@modules/products/repositories/IProductsRep
 import { container, inject, injectable } from "tsyringe";
 import { CreateProductUseCase } from "../CreateProduct/CreateProductUseCase";
 
-
-
 @injectable()
 class FindProductByNameUseCase {
 
@@ -15,13 +13,14 @@ class FindProductByNameUseCase {
     ) { }
 
     async execute(name: string): Promise<Product[]> {
+
+
         if (name.length > 100) {
             throw new AppError("Character limit exceeded", 400)
         }
 
-        const nameLowerCase = name.toLocaleLowerCase();
+        const products = await this.productsRepository.findByName(name.toLocaleLowerCase());
 
-        let products = await this.productsRepository.findByName(nameLowerCase);
 
         return products;
     }
