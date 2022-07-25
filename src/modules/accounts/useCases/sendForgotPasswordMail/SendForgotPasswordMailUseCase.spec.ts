@@ -3,6 +3,7 @@ import { UsersRepositoryInMemory } from "@modules/accounts/repositories/in-memor
 import { UsersTokensRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersTokensRepositoryInMemory";
 import { DateProvider } from "@shared/container/providers/DateProvider/implementations/DateProvider";
 import { MailProviderInMemory } from "@shared/container/providers/MailProvider/in-memory/MailProviderInMemory";
+import { ValidateProvider } from "@shared/container/providers/ValidateProvider/implementations/ValidateProvider";
 import { SendForgotPasswordMailUseCase } from "./SendForgotPasswordMailUseCase"
 
 let sendForgotPasswordMailUseCase: SendForgotPasswordMailUseCase
@@ -10,6 +11,7 @@ let usersRepositoryInMemory: UsersRepositoryInMemory;
 let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
 let mailProvider: MailProviderInMemory;
 let dateProvider: DateProvider;
+let validateProvider: ValidateProvider;
 
 describe("Send forgot mail useCase", () => {
 
@@ -18,11 +20,13 @@ describe("Send forgot mail useCase", () => {
         usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
         dateProvider = new DateProvider();
         mailProvider = new MailProviderInMemory();
+        validateProvider = new ValidateProvider();
         sendForgotPasswordMailUseCase = new SendForgotPasswordMailUseCase(
             usersRepositoryInMemory,
             usersTokensRepositoryInMemory,
             dateProvider,
-            mailProvider
+            mailProvider,
+            validateProvider
         );
     })
 
@@ -45,7 +49,7 @@ describe("Send forgot mail useCase", () => {
     it("should not ble able to send an email if user does not exists", async () => {
         expect(async () => {
             await sendForgotPasswordMailUseCase.execute("false@email.com")
-        }).rejects.toEqual(new AppError("User does not exists!"))
+        }).rejects.toEqual(new AppError("User does not exists!", 404))
     })
 
     it("should be able to create an users token", async () => {

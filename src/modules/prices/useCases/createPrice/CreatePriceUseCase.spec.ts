@@ -4,6 +4,7 @@ import { PricesRepositoryInMemory } from "@modules/prices/repositories/in-memory
 import { Product } from "@modules/products/infra/typeorm/entities/Product";
 import { ProductsRepositoryInMemory } from "@modules/products/repositories/in-memory/ProductsRepositoryInMemory";
 import { SupermarketsRepositoryInMemory } from "@modules/supermarkets/repositories/in-memory/SupermarketsRepositoryInMemory";
+import { ValidateProvider } from "@shared/container/providers/ValidateProvider/implementations/ValidateProvider";
 import { CreatePriceUseCase } from "./CreatePriceUseCase";
 
 
@@ -13,6 +14,7 @@ let createPriceUseCase: CreatePriceUseCase;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 let productsRepositoryInMemory: ProductsRepositoryInMemory;
 let supermarketsRepositoryInMemory: SupermarketsRepositoryInMemory;
+let validateProvider: ValidateProvider;
 
 describe("Create Price useCase", () => {
 
@@ -21,11 +23,13 @@ describe("Create Price useCase", () => {
         usersRepositoryInMemory = new UsersRepositoryInMemory();
         productsRepositoryInMemory = new ProductsRepositoryInMemory();
         supermarketsRepositoryInMemory = new SupermarketsRepositoryInMemory();
+        validateProvider = new ValidateProvider();
         createPriceUseCase = new CreatePriceUseCase(
             pricesRepositoryInMemory,
             usersRepositoryInMemory,
             supermarketsRepositoryInMemory,
             productsRepositoryInMemory,
+            validateProvider
         );
     });
 
@@ -53,8 +57,8 @@ describe("Create Price useCase", () => {
         })
 
         const price = await createPriceUseCase.execute({
-            product_id: product.id,
-            supermarket_id: supermarket.id,
+            gtin: product.gtin,
+            supermarket_name: supermarket.name,
             user_id: userCreated.id,
             price: 4.0
         })
@@ -62,7 +66,7 @@ describe("Create Price useCase", () => {
         expect(price).toHaveProperty("id");
     })
 
-    it("Should not be able to create a Price with same product id and supermarket id", async () => {
+    it("Should not be able to create a Price with same product and supermarket", async () => {
 
         expect(async () => {
             const user = await usersRepositoryInMemory.create({
@@ -86,15 +90,15 @@ describe("Create Price useCase", () => {
             })
 
             await createPriceUseCase.execute({
-                product_id: product.id,
-                supermarket_id: supermarket.id,
+                gtin: product.gtin,
+                supermarket_name: supermarket.name,
                 user_id: userCreated.id,
                 price: 4.0
             })
 
             await createPriceUseCase.execute({
-                product_id: product.id,
-                supermarket_id: supermarket.id,
+                gtin: product.gtin,
+                supermarket_name: supermarket.name,
                 user_id: userCreated.id,
                 price: 4.0
             })

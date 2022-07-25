@@ -16,8 +16,6 @@ let usersRepositoryInMemory: UsersRepositoryInMemory;
 
 
 describe("Find prices useCase", () => {
-
-
     beforeEach(() => {
         pricesRepositoryInMemory = new PricesRepositoryInMemory()
         productsRepositoryInMemory = new ProductsRepositoryInMemory()
@@ -33,7 +31,7 @@ describe("Find prices useCase", () => {
     })
 
 
-    it("Should be able to create a new Price", async () => {
+    it("Should be able to find a Price", async () => {
 
         const product = await productsRepositoryInMemory.create({
             name: "product test",
@@ -67,7 +65,6 @@ describe("Find prices useCase", () => {
             gtin: product.gtin
         });
 
-
-        expect(prices).toEqual([priceCreated]);
+        expect(prices.length).toEqual(1);
     })
 })

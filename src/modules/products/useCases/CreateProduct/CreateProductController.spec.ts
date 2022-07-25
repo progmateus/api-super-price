@@ -40,8 +40,6 @@ describe("Create product controller", () => {
     })
 
 
-
-
     it("Should be able to create a new product", async () => {
         const responseToken = await request(app)
 
@@ -51,7 +49,7 @@ describe("Create product controller", () => {
                 password: "admin123"
             })
 
-        const { refresh_token } = responseToken.body;
+        const { token } = responseToken.body;
 
         const response = await request(app)
             .post("/products")
@@ -61,7 +59,7 @@ describe("Create product controller", () => {
                 brand: "brand test"
             })
             .set({
-                authorization: `Bearer ${refresh_token}`
+                authorization: `Bearer ${token}`
             })
 
         expect(response.status).toBe(201);
@@ -76,7 +74,7 @@ describe("Create product controller", () => {
                 password: "admin123"
             })
 
-        const { refresh_token } = responseToken.body;
+        const { token } = responseToken.body;
 
         const response = await request(app)
             .post("/products")
@@ -86,10 +84,10 @@ describe("Create product controller", () => {
                 brand: "brand test"
             })
             .set({
-                authorization: `Bearer ${refresh_token}`
+                authorization: `Bearer ${token}`
             })
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(409);
     })
 
 });

@@ -31,7 +31,6 @@ describe("Find price controller", () => {
     })
 
 
-
     it("Should be able to find a price", async () => {
 
         const responseTokenAdmin = await request(app)
@@ -41,7 +40,7 @@ describe("Find price controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.refresh_token;
+        const tokenAdmin = responseTokenAdmin.body.token;
 
         const productResponse = await request(app)
             .post("/products")
@@ -66,8 +65,8 @@ describe("Find price controller", () => {
         const price = await request(app)
             .post("/prices")
             .send({
-                supermarket_id: supermarketResponse.body.id,
-                product_id: productResponse.body.id,
+                supermarket_name: supermarketResponse.body.name,
+                gtin: productResponse.body.gtin,
                 price: 4.0
             })
             .set({
@@ -92,11 +91,11 @@ describe("Find price controller", () => {
                 password: "user123"
             })
 
-        const tokenUser = responseTokenUser.body.refresh_token;
+        const tokenUser = responseTokenUser.body.token;
 
 
         const response = await request(app)
-            .get("/prices/find/")
+            .get("/prices/")
             .query({
                 supermarket_name: "supermarket test",
                 gtin: "7898940123025"
@@ -107,8 +106,8 @@ describe("Find price controller", () => {
 
 
         expect(response.status).toBe(200);
-        expect(response.body[0]).toHaveProperty("id");
-        expect(response.body[0].supermarket_id).toEqual(supermarketResponse.body.id);
+        expect(response.body[0].price).toHaveProperty("id");
+        expect(response.body[0].supermarket.id).toEqual(supermarketResponse.body.id);
 
     })
 })

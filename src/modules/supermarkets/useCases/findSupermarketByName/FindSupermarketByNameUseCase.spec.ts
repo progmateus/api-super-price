@@ -16,16 +16,17 @@ describe("Find supermarket by name useCase", () => {
             name: "Supermarket test"
         };
 
+        const nameToLowerCase = supermarket.name.toLocaleLowerCase();
+
         await supermarketsRepositoryInMemory.create({
-            name: supermarket.name
+            name: nameToLowerCase
         })
 
         const supermarketCreated = await findSupermarketByNameUseCase.execute(
             supermarket.name
         );
 
-        expect(supermarketCreated.name).toEqual(supermarket.name);
-
+        expect(supermarketCreated.name).toEqual(nameToLowerCase);
 
     })
 });

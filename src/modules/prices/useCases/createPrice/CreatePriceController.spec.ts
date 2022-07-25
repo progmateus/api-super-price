@@ -5,9 +5,7 @@ import createConnection from "@database/index";
 import { v4 as uuidV4 } from "uuid";
 import { hash } from "bcryptjs";
 
-
 let connection: Connection
-
 
 describe("Create price controller", () => {
     beforeAll(async () => {
@@ -39,7 +37,8 @@ describe("Create price controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.refresh_token;
+        const tokenAdmin = responseTokenAdmin.body.token;
+
         const productResponse = await request(app)
             .post("/products")
             .send({
@@ -63,8 +62,8 @@ describe("Create price controller", () => {
         const response = await request(app)
             .post("/prices")
             .send({
-                supermarket_id: supermarketResponse.body.id,
-                product_id: productResponse.body.id,
+                supermarket_name: supermarketResponse.body.name,
+                gtin: productResponse.body.gtin,
                 price: 4.0
             })
             .set({
@@ -77,7 +76,7 @@ describe("Create price controller", () => {
 
     })
 
-    it("Should not be able to create a Price with same product id and supermarket id", async () => {
+    it("Should not be able to create a Price with same product and supermarket", async () => {
 
         const responseTokenAdmin = await request(app)
             .post('/sessions')
@@ -86,7 +85,7 @@ describe("Create price controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.refresh_token;
+        const tokenAdmin = responseTokenAdmin.body.token;
 
         const productResponse = await request(app)
             .get("/products/7898940123025")
@@ -106,13 +105,13 @@ describe("Create price controller", () => {
         const response = await request(app)
             .post("/prices")
             .send({
-                supermarket_id: supermarketResponse.body.id,
-                product_id: productResponse.body.id,
+                supermarket_name: supermarketResponse.body.name,
+                gtin: productResponse.body.gtin,
                 price: 4.0
             })
             .set({
                 authorization: `Bearer ${tokenAdmin}`
             })
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(409);
     })
 })

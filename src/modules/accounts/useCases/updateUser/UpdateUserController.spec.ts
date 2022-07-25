@@ -46,71 +46,23 @@ describe("Update User Controller", () => {
                 password: user.password
             })
 
-        const { refresh_token } = responseToken.body;
+        const { token } = responseToken.body;
 
         const userUpdate = {
             name: "test",
         }
 
         const response = await request(app)
-            .put("/users/edit")
+            .put("/users")
             .send({
                 name: userUpdate.name
             })
             .set({
-                authorization: `Bearer ${refresh_token}`
+                authorization: `Bearer ${token}`
             })
 
 
         expect(response.status).toBe(200);
-
     })
 
-
-    it("Should not be able update more then one information", async () => {
-
-        const user = {
-            name: "username",
-            lastname: "userlastname",
-            email: "user@email.com",
-            password: "user123",
-        }
-
-        await request(app)
-            .post("/users")
-            .send({
-                name: user.name,
-                lastname: user.lastname,
-                email: user.email,
-                password: user.password,
-            })
-
-        const responseToken = await request(app)
-
-            .post('/sessions')
-            .send({
-                email: user.email,
-                password: user.password
-            })
-
-        const { refresh_token } = responseToken.body;
-
-        const userUpdate = {
-            name: "john",
-            lastname: "doe"
-        }
-
-        const response = await request(app)
-            .put("/users/edit")
-            .send({
-                name: userUpdate.name,
-                lastname: userUpdate.lastname
-            })
-            .set({
-                authorization: `Bearer ${refresh_token}`
-            })
-
-        expect(response.status).toBe(400);
-
-    })
 })

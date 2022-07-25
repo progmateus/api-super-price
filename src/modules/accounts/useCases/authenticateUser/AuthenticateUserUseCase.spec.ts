@@ -63,7 +63,7 @@ describe("Authenticate user useCase", () => {
                 password: "1234"
             });
 
-        }).rejects.toEqual(new AppError("Email or password incorrect!"))
+        }).rejects.toEqual(new AppError("Email or password incorrect!", 401))
     })
 
 
@@ -82,7 +82,7 @@ describe("Authenticate user useCase", () => {
                 email: "false@email.com",
                 password: "1234"
             });
-        }).rejects.toEqual(new AppError("Email or password incorrect!"))
+        }).rejects.toEqual(new AppError("Email or password incorrect!", 401))
     })
 })
 

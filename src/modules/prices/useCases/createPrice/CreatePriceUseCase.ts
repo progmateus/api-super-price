@@ -43,22 +43,15 @@ class CreatePriceUseCase {
             throw new AppError("Invalid user uuid")
         }
 
-        const findProductByGtinUseCase = container.resolve(FindProductByGtinUseCase)
-        const createSupermarketUseCase = container.resolve(CreateSupermarketUseCase);
+        // const findProductByGtinUseCase = container.resolve(FindProductByGtinUseCase)
+        // const createSupermarketUseCase = container.resolve(CreateSupermarketUseCase);
 
-        const product = await findProductByGtinUseCase.execute(gtin)
+        if (gtin.length > 50) {
+            throw new AppError("Character limit exceeded", 400)
+        }
 
-
-        const supermarketLowerCase = supermarket_name.toLowerCase()
-
-
-        let supermarket = await this.supermarketsRepository.findByName(supermarketLowerCase);
-
-
-
-        if (!supermarket) {
-
-            supermarket = await createSupermarketUseCase.execute({ name: supermarket_name })
+        if (supermarket_name.length > 100) {
+            throw new AppError("Character limit exceeded", 400)
         }
 
 
@@ -66,6 +59,27 @@ class CreatePriceUseCase {
 
         if (!user) {
             throw new AppError("User does not exists", 404);
+        }
+
+        const isValidGtin = await this.validateProvider.validateGtin(gtin);
+
+        if (isValidGtin === false) {
+            throw new AppError("Invalid Gtin", 400)
+        }
+
+        const product = await this.productsRepository.findByGtin(gtin)
+
+        if (!product) {
+            throw new AppError("Product not found", 404)
+        }
+
+        const supermarketLowerCase = supermarket_name.toLowerCase()
+
+        let supermarket = await this.supermarketsRepository.findByName(supermarketLowerCase);
+
+        if (!supermarket) {
+
+            supermarket = await this.supermarketsRepository.create(supermarketLowerCase)
         }
 
         if (typeof price !== "number") {

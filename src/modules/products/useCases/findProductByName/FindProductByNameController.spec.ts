@@ -9,7 +9,7 @@ import { hash } from "bcryptjs";
 let connection: Connection
 
 
-describe("Find product bt name controller", () => {
+describe("Find product by name controller", () => {
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();
@@ -41,7 +41,7 @@ describe("Find product bt name controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.refresh_token;
+        const tokenAdmin = responseTokenAdmin.body.token;
 
         await request(app)
             .post("/products")
@@ -53,9 +53,6 @@ describe("Find product bt name controller", () => {
             .set({
                 authorization: `Bearer ${tokenAdmin}`
             })
-
-
-
 
         const user = await request(app)
             .post("/users")
@@ -74,9 +71,7 @@ describe("Find product bt name controller", () => {
                 password: "user123"
             })
 
-        const tokenUser = responseTokenUser.body.refresh_token;
-
-
+        const tokenUser = responseTokenUser.body.token;
 
         const response = await request(app)
             .get("/products/name/")
