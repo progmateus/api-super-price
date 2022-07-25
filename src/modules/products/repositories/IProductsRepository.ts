@@ -8,5 +8,6 @@ interface IProductsRepository {
     findByGtin(gtin: string): Promise<Product>;
     findByName(name: string): Promise<Product[]>;
     list(): Promise<Product[]>;
+    delete(id: string): Promise<void>;
 }
 export { IProductsRepository };

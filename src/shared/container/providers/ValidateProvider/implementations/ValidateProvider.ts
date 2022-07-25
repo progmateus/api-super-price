@@ -56,7 +56,42 @@ class ValidateProvider implements IValidateProvider {
         const regex = /^[0-9]+$/g
 
         const isValid = regex.test(gtin);
-        return isValid;
+
+        if (!isValid) {
+            return false
+        }
+
+        const gtinValue = gtin.replace("/\D/", "")
+
+        if (gtinValue.length != 13) {
+            return false
+        }
+
+        const pieceGTIN = gtinValue.substring(0, 12);
+
+        const codeBR = gtinValue.substring(0, 3);
+
+        if (codeBR !== "789") {
+            return false
+        }
+
+        let soma = 0;
+        let lastDigit;
+
+        for (let i = 0; i < pieceGTIN.length; i++) {
+            soma += (i % 2 == 0) ? Number(pieceGTIN[i]) : (Number(pieceGTIN[i]) * 3)
+        }
+
+        for (let i = 0; i <= 9; i++) {
+            if ((soma + i) % 10 == 0) {
+                lastDigit = String(i)
+            }
+
+        }
+
+        const concat = pieceGTIN.concat(lastDigit)
+
+        return concat === gtin
     }
 
     async uuidValidateV4(id: string): Promise<boolean> {
