@@ -10,6 +10,7 @@ interface IPricesRepository {
     findByProductId(product_id: string): Promise<Price[]>;
     findByUserId(user_id: string): Promise<Price[]>
     findPrice(supermarket_id?: string, product_id?: string): Promise<Price[]>;
+    delete(id: string): Promise<void>;
 }
 
 export { IPricesRepository }
