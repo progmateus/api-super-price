@@ -3,7 +3,7 @@ import { IProductsRepository } from "@modules/products/repositories/IProductsRep
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
 import { getProductByGtin } from "@services/api";
 import { container, inject, injectable } from "tsyringe";
-import { CreateProductUseCase } from "../CreateProduct/CreateProductUseCase";
+import { CreateProductUseCase } from "../createProduct/CreateProductUseCase";
 
 
 @injectable()
@@ -25,6 +25,7 @@ class FindProductByGtinUseCase {
 
         const isValidGtin = await this.validateProvider.validateGtin(gtin);
 
+
         if (isValidGtin === false) {
             throw new AppError("Invalid Gtin", 400)
         }
@@ -41,7 +42,7 @@ class FindProductByGtinUseCase {
                     product = await createProductUseCase.execute({
                         name: getProduct.data.description,
                         brand: getProduct.data.brand?.name,
-                        gtin: getProduct.data.gtin,
+                        gtin: getProduct.data.gtin.toString(),
                         thumbnail: getProduct.data.thumbnail
                     });
 

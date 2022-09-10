@@ -43,6 +43,10 @@ class ProductsRepositoryInMemory implements IProductsRepository {
         const products = this.products.filter(product => product.name === name)
         return products
     }
+    async delete(id: string): Promise<void> {
+        const product = this.products.findIndex(product => product.id === id)
+        await this.products.splice(product)
+    }
 
 }
 export { ProductsRepositoryInMemory };

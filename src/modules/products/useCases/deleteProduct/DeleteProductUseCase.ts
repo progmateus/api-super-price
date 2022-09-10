@@ -15,19 +15,19 @@ class DeleteProductUseCase {
         private validateProvider: IValidateProvider
     ) { }
 
-    async execute(gtin: string) {
+    async execute(id: string) {
 
-        if (gtin.length > 20) {
+        if (id.length > 50) {
             throw new AppError("Character limit exceeded", 400)
         }
 
-        const isValidGtin = await this.validateProvider.validateGtin(gtin);
+        const isValidUuidV4 = await this.validateProvider.uuidValidateV4(id)
 
-        if (!isValidGtin) {
-            throw new AppError("Invalid gtin", 400)
+        if (!isValidUuidV4) {
+            throw new AppError("Invalid uuid", 400)
         }
 
-        const product = await this.productsRepository.findByGtin(gtin);
+        const product = await this.productsRepository.findById(id);
 
         if (!product) {
             throw new AppError("Product not found", 404)

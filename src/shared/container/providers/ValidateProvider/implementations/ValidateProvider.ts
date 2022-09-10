@@ -63,6 +63,7 @@ class ValidateProvider implements IValidateProvider {
 
         const gtinValue = gtin.replace("/\D/", "")
 
+
         if (gtinValue.length != 13) {
             return false
         }

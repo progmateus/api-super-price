@@ -2,7 +2,7 @@ import { AppError } from "@errors/AppError";
 import { Product } from "@modules/products/infra/typeorm/entities/Product";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { container, inject, injectable } from "tsyringe";
-import { CreateProductUseCase } from "../CreateProduct/CreateProductUseCase";
+import { CreateProductUseCase } from "../createProduct/CreateProductUseCase";
 
 @injectable()
 class FindProductByNameUseCase {

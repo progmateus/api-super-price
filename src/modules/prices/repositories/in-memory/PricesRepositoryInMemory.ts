@@ -68,5 +68,10 @@ class PricesRepositoryInMemory implements IPricesRepository {
 
     }
 
+    async delete(id: string): Promise<void> {
+        const price = this.prices.findIndex(product => product.id === id)
+        await this.prices.splice(price)
+    }
+
 }
 export { PricesRepositoryInMemory };

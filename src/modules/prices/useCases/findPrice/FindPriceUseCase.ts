@@ -42,7 +42,12 @@ class FindPriceUseCase {
 
         if (gtin) {
 
+            console.log("Antes");
+
             const isValidGtin = await this.validateProvider.validateGtin(gtin);
+
+            console.log("Depois");
+
 
             if (isValidGtin === false) {
                 throw new AppError("Invalid Gtin!", 400);

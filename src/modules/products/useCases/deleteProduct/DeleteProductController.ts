@@ -4,11 +4,11 @@ import { DeleteProductUseCase } from "./DeleteProductUseCase"
 
 class DeleteProductController {
     async handle(request: Request, response: Response) {
-        const { gtin } = request.params;
+        const { id } = request.params;
 
         const deleteProductUseCase = container.resolve(DeleteProductUseCase)
 
-        await deleteProductUseCase.execute(gtin);
+        await deleteProductUseCase.execute(id);
 
         return response.status(204).json({ message: "Deleted" });
     }

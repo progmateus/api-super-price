@@ -32,6 +32,7 @@ class CreateProductUseCase {
 
         const isValidGtin = this.validateProvider.validateGtin(gtin);
 
+
         if (isValidGtin === false) {
             throw new AppError("Invalid Gtin", 400)
         }

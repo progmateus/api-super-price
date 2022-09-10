@@ -34,5 +34,7 @@ class SupermarketsRepositoryInMemory implements ISupermarketsRepository {
         const supermarket = await this.supermarkets;
         return supermarket;
     }
+
+
 }
 export { SupermarketsRepositoryInMemory };
