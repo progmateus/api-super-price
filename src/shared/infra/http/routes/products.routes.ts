@@ -20,7 +20,7 @@ productsRoutes.post("/", ensureAuthenticated, EnsureAdmin, createProductControll
 productsRoutes.get("/", ensureAuthenticated, litsProductsController.handle);
 productsRoutes.get("/name/", ensureAuthenticated, findProductByNameController.handle);
 productsRoutes.get("/:gtin", ensureAuthenticated, findProductByGtinController.handle);
-productsRoutes.delete("/:gtin", ensureAuthenticated, EnsureAdmin, deleteProductController.handle);
+productsRoutes.delete("/:id", ensureAuthenticated, EnsureAdmin, deleteProductController.handle);
 
 
 
