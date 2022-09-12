@@ -42,11 +42,7 @@ class FindPriceUseCase {
 
         if (gtin) {
 
-            console.log("Antes");
-
             const isValidGtin = await this.validateProvider.validateGtin(gtin);
-
-            console.log("Depois");
 
 
             if (isValidGtin === false) {
@@ -55,6 +51,7 @@ class FindPriceUseCase {
 
 
             const product = await this.productsRepository.findByGtin(gtin);
+
             if (!product) {
                 throw new AppError("Product not found!", 404)
             }
@@ -74,7 +71,6 @@ class FindPriceUseCase {
 
             supermarket_id = supermarket.id;
         }
-
 
         const prices = await this.pricesRepository.findPrice(
             supermarket_id,
@@ -113,6 +109,7 @@ class FindPriceUseCase {
             }
 
             pricesResponse.push(priceResponse);
+
         }
         return pricesResponse;
 

@@ -9,7 +9,8 @@ import { hash } from "bcryptjs";
 
 let connection: Connection
 
-describe("Delete product controller", () => {
+describe("Delete price controller", () => {
+
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();
@@ -31,17 +32,9 @@ describe("Delete product controller", () => {
     })
 
 
-    it("Should be able to delete a product", async () => {
-
-
-        const product = {
-            name: "product test",
-            gtin: "7898940123025",
-            brand: "brand test"
-        }
+    it("Should be able to delete a price", async () => {
 
         const responseToken = await request(app)
-
             .post('/sessions')
             .send({
                 email: "admin@gmail.com",
@@ -50,6 +43,13 @@ describe("Delete product controller", () => {
 
         const { token } = responseToken.body;
 
+        const product = {
+            name: "product test",
+            gtin: "7898940123025",
+            brand: "brand test"
+        }
+
+        ///create a product
         await request(app)
             .post("/products")
             .send({
@@ -61,43 +61,49 @@ describe("Delete product controller", () => {
                 authorization: `Bearer ${token}`
             })
 
-        const productResponse = await request(app)
-            .get(`/products/${product.gtin}`)
+
+        ///create a supermarket
+        await request(app)
+            .post("/supermarkets")
+            .send({
+                name: "supermarket test",
+            })
+            .set({
+                authorization: `Bearer ${token}`
+            })
+
+
+        ///create a price
+        await request(app)
+            .post("/prices")
+            .send({
+                supermarket_name: "supermarket test",
+                gtin: product.gtin,
+                price: 4.0
+            })
+            .set({
+                authorization: `Bearer ${token}`
+            })
+
+
+        ///find a price
+        const priceResponse = await request(app)
+            .get("/prices")
+            .query({
+                supermarket_name: "supermarket test",
+                gtin: product.gtin
+            })
             .set({
                 authorization: `Bearer ${token}`
             })
 
 
         const response = await request(app)
-            .delete(`/products/${productResponse.body.id}`)
+            .delete(`/prices/${priceResponse.body[0].price.id}`)
             .set({
                 authorization: `Bearer ${token}`
             })
 
         expect(response.status).toBe(204);
-    })
-
-    it("should not be able to delete a non-existing product", async () => {
-
-        const uuid = uuidV4();
-
-        const responseToken = await request(app)
-
-            .post('/sessions')
-            .send({
-                email: "admin@gmail.com",
-                password: "admin123"
-            })
-
-        const { token } = responseToken.body;
-
-
-        const response = await request(app)
-            .delete(`/products/${uuid}`)
-            .set({
-                authorization: `Bearer ${token}`
-            })
-
-        expect(response.status).toBe(404);
     })
 });

@@ -11,7 +11,7 @@ class DeletePriceController {
 
         await deletePriceUseCase.execute(id);
 
-        return response.status(204);
+        return response.status(204).json({ message: "Deleted" });
     }
 }
 

@@ -19,7 +19,7 @@ class DeletePriceUseCase {
             throw new AppError("Character limit exceeded", 400)
         }
 
-        const isValidUuidV4 = this.validateProvider.uuidValidateV4(id);
+        const isValidUuidV4 = await this.validateProvider.uuidValidateV4(id);
 
         if (!isValidUuidV4) {
             throw new AppError("Invalid uuid", 400)
