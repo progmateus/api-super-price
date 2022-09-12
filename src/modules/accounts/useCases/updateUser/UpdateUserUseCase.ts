@@ -99,6 +99,14 @@ class UpdateUserUseCase {
             }
         }
 
+        if (password && !last_password) {
+            throw new AppError("last password is missing!", 422)
+        }
+
+        if (last_password && !password) {
+            throw new AppError("password is missing!", 422)
+        }
+
         if (password && last_password) {
 
             const passwordMatch = await compare(last_password, user.password);

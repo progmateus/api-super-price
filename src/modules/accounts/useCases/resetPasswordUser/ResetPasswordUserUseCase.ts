@@ -28,6 +28,11 @@ class ResetPasswordUserUseCase {
 
     async execute({ token, password }: IRequest): Promise<void> {
 
+        if (!token || !password) {
+            throw new AppError("Information missing", 422)
+
+        }
+
         const userToken = await this.usersTokensRepository.findByRefreshToken(token)
 
         if (!userToken) {
