@@ -14,15 +14,18 @@ export class CreatePrices1649544578413 implements MigrationInterface {
                     },
                     {
                         name: "product_id",
-                        type: "uuid"
+                        type: "uuid",
+
                     },
                     {
                         name: "supermarket_id",
-                        type: "uuid"
+                        type: "uuid",
+
                     },
                     {
                         name: "user_id",
-                        type: "uuid"
+                        type: "uuid",
+
                     },
                     {
                         name: "price",
@@ -45,24 +48,24 @@ export class CreatePrices1649544578413 implements MigrationInterface {
                         referencedTableName: "products",
                         referencedColumnNames: ["id"],
                         columnNames: ["product_id"],
-                        onDelete: "SET NULL",
-                        onUpdate: "SET NULL"
+                        onDelete: "CASCADE",
+                        onUpdate: "CASCADE"
                     },
                     {
                         name: "FKSupermarketPrice",
                         referencedTableName: "supermarkets",
                         referencedColumnNames: ["id"],
                         columnNames: ["supermarket_id"],
-                        onDelete: "SET NULL",
-                        onUpdate: "SET NULL"
+                        onDelete: "CASCADE",
+                        onUpdate: "CASCADE"
                     },
                     {
                         name: "FKUserPrice",
                         referencedTableName: "users",
                         referencedColumnNames: ["id"],
                         columnNames: ["user_id"],
-                        onDelete: "SET NULL",
-                        onUpdate: "SET NULL"
+                        onDelete: "CASCADE",
+                        onUpdate: "CASCADE"
                     }
                 ]
 

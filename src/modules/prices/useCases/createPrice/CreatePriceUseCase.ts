@@ -39,12 +39,10 @@ class CreatePriceUseCase {
         price
     }): Promise<Price> {
 
+
         if (await this.validateProvider.uuidValidateV4(user_id) === false) {
             throw new AppError("Invalid user uuid")
         }
-
-        // const findProductByGtinUseCase = container.resolve(FindProductByGtinUseCase)
-        // const createSupermarketUseCase = container.resolve(CreateSupermarketUseCase);
 
         if (gtin.length > 50) {
             throw new AppError("Character limit exceeded", 400)
@@ -81,6 +79,7 @@ class CreatePriceUseCase {
 
             supermarket = await this.supermarketsRepository.create(supermarketLowerCase)
         }
+
 
         if (typeof price !== "number") {
             throw new AppError("Invalid price!", 400)

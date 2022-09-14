@@ -33,7 +33,7 @@ class DeleteProductUseCase {
             throw new AppError("Product not found", 404)
         }
 
-        await this.productsRepository.delete(product.id)
+        await this.productsRepository.delete(id)
     }
 
 }

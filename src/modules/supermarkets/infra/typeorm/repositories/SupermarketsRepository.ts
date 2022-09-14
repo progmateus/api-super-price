@@ -11,9 +11,8 @@ class SupermarketsRepository implements ISupermarketsRepository {
         this.repository = getRepository(Supermarket)
     }
 
-    async create({
-        name
-    }: ICreateSupermarketDTO): Promise<Supermarket> {
+    async create(name: string): Promise<Supermarket> {
+
         const supermarket = this.repository.create({
             name
         })
@@ -32,13 +31,16 @@ class SupermarketsRepository implements ISupermarketsRepository {
 
     async findByName(name: string): Promise<Supermarket> {
         const supermarket = await this.repository.findOne({ name })
-
         return supermarket;
     }
 
     async list(): Promise<Supermarket[]> {
         const supermarkets = await this.repository.find();
         return supermarkets
+    }
+
+    async delete(id: string): Promise<void> {
+        await this.repository.delete(id);
     }
 
 }
