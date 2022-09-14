@@ -24,7 +24,6 @@ class FindSupermarketByNameUseCase {
 
         const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);
 
-
         if (!supermarket) {
             throw new AppError("Supermarket not found!", 404);
         }

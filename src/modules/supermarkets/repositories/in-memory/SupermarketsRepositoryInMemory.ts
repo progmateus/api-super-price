@@ -35,6 +35,11 @@ class SupermarketsRepositoryInMemory implements ISupermarketsRepository {
         return supermarket;
     }
 
+    async delete(id: string): Promise<void> {
+        const product = this.supermarkets.findIndex(product => product.id === id)
+        await this.supermarkets.splice(product)
+    }
+
 
 }
 export { SupermarketsRepositoryInMemory };

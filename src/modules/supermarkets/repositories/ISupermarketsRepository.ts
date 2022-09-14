@@ -3,7 +3,7 @@ import { Supermarket } from "../infra/typeorm/entities/Supermarket";
 
 interface ISupermarketsRepository {
 
-    create(name: string): Promise<Supermarket>;
+    create(data: ICreateSupermarketDTO): Promise<Supermarket>;
     findById(id: string): Promise<Supermarket>;
     findByName(name: string): Promise<Supermarket>;
     list(): Promise<Supermarket[]>;

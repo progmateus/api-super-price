@@ -11,7 +11,9 @@ class SupermarketsRepository implements ISupermarketsRepository {
         this.repository = getRepository(Supermarket)
     }
 
-    async create(name: string): Promise<Supermarket> {
+    async create({
+        name
+    }: ICreateSupermarketDTO): Promise<Supermarket> {
 
         const supermarket = this.repository.create({
             name
