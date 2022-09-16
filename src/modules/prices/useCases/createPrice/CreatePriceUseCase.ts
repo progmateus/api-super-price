@@ -77,7 +77,7 @@ class CreatePriceUseCase {
 
         if (!supermarket) {
 
-            supermarket = await this.supermarketsRepository.create(supermarketLowerCase)
+            supermarket = await this.supermarketsRepository.create({ name: supermarketLowerCase })
         }
 
 

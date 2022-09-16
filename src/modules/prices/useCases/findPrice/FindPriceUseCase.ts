@@ -65,7 +65,6 @@ class FindPriceUseCase {
             const supermarket = await this.supermarketsRepository.findByName(supermarket_name.toLocaleLowerCase());
 
             if (!supermarket) {
-                /// throw new AppError("Supermarket not found!", 404)
                 return ([])
             }
 
