@@ -385,6 +385,46 @@
                 }
             }
         },
+        "/products/{id}":{
+                "delete": {
+                    "description": "delete product by id",
+                    "summary": "delete product by id",
+                    "tags": ["Products"],
+                    "security":[{"bearerAuth": []}],
+                    "produces": ["application/json"],
+                    "parameters":[{
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of product",
+                        "required": true,
+                        "type": "string",
+                        "examples":{
+                            "id":{
+                                "value": "2a96b895-ddb2-4754-bda9-02b14c01bc04"
+                    
+                            }
+                        }
+                        
+                    }],
+                    "responses":{
+                        "204":{
+                            "description": "Deleted"
+                        },
+                        "400":{
+                            "description": "Invalid information sended"
+                        },
+                        "401":{
+                            "description": "Unauthorized"
+                        },
+                        "404":{
+                            "description": "Product not found"
+                        },
+                        "500":{
+                            "description": "Internal server Error"
+                        }
+                    }
+                }
+        },
         "/products/{gtin}":{
             "get":{
                 "description": "Find product by gtin",
@@ -558,7 +598,8 @@
                     }
                 } 
             }
-        },
+        }
+    },
         "/supermarkets/name/":{
             "get":{
                 "summary": "Find supermarket by name",
@@ -778,8 +819,8 @@
                     }
                 }
             }
-        }
-    },
+        },
+
     "components":{
             "schemas": {
                 "User":{
