@@ -860,6 +860,46 @@
                 }
             }
         },
+        "/prices/{id}":{
+            "delete": {
+                "description": "delete price by id",
+                "summary": "delete price by id",
+                "tags": ["Prices"],
+                "security":[{"bearerAuth": []}],
+                "produces": ["application/json"],
+                "parameters":[{
+                    "name": "id",
+                    "in": "path",
+                    "description": "id of price",
+                    "required": true,
+                    "type": "string",
+                    "examples":{
+                        "id":{
+                            "value": "fb722523-4368-4659-a535-2fec95f693e0"
+                
+                        }
+                    }
+                    
+                }],
+                "responses":{
+                    "204":{
+                        "description": "Deleted"
+                    },
+                    "400":{
+                        "description": "Invalid information sended"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "404":{
+                        "description": "Price not found"
+                    },
+                    "500":{
+                        "description": "Internal server Error"
+                    }
+                }
+        }  
+    },
 
     "components":{
             "schemas": {
