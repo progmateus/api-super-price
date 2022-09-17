@@ -644,6 +644,46 @@
                 }
             }
         },
+        "/supermarkets/{id}":{
+            "delete": {
+                "description": "delete supermarket by id",
+                "summary": "delete supermarket by id",
+                "tags": ["Supermarkets"],
+                "security":[{"bearerAuth": []}],
+                "produces": ["application/json"],
+                "parameters":[{
+                    "name": "id",
+                    "in": "path",
+                    "description": "id of supermarket",
+                    "required": true,
+                    "type": "string",
+                    "examples":{
+                        "id":{
+                            "value": "91ee2774-17e7-4c80-850b-296a23e1a03d"
+                
+                        }
+                    }
+                    
+                }],
+                "responses":{
+                    "204":{
+                        "description": "Deleted"
+                    },
+                    "400":{
+                        "description": "Invalid information sended"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "404":{
+                        "description": "Supermarket not found"
+                    },
+                    "500":{
+                        "description": "Internal server Error"
+                    }
+                }
+        }
+    },
         "/prices":{
             "post":{
                 "summary": "Create Price",
