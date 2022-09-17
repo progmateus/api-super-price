@@ -598,8 +598,7 @@
                     }
                 } 
             }
-        }
-    },
+        },
         "/supermarkets/name/":{
             "get":{
                 "summary": "Find supermarket by name",
@@ -682,8 +681,8 @@
                         "description": "Internal server Error"
                     }
                 }
-        }
-    },
+            }
+        },
         "/prices":{
             "post":{
                 "summary": "Create Price",
@@ -898,9 +897,9 @@
                         "description": "Internal server Error"
                     }
                 }
-        }  
+            }  
+        }     
     },
-
     "components":{
             "schemas": {
                 "User":{
