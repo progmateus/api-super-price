@@ -212,9 +212,9 @@
         },
         "/sessions":{
             "post":{
-                "summary": "Authentication user",
-                "description": "Authentication user",
-                "tags": ["Users"],
+                "summary": "Authenticate user",
+                "description": "Authenticate user",
+                "tags": ["Authenticate"],
                 "requestBody": {
                     "content":{
                         "application/json":{
@@ -267,6 +267,53 @@
                     },
                     "401":{
                         "description": "Email or password incorrect"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/refresh-token":{
+            "post":{
+                "summary": "Refresh token",
+                "description": "Refresh token",
+                "tags": ["Authenticate"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "token":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "refresh_token":{
+                                            "type": "string"
+                                        },
+                                        "token":{
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Refresh Token does not exists!"
                     },
                     "500":{
                         "description": "Internal server error"
