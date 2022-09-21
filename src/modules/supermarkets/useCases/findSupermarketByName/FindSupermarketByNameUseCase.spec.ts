@@ -1,13 +1,20 @@
 import { SupermarketsRepositoryInMemory } from "@modules/supermarkets/repositories/in-memory/SupermarketsRepositoryInMemory";
+import { ValidateProvider } from "@shared/container/providers/ValidateProvider/implementations/ValidateProvider";
+import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
 import { FindSupermarketByNameUseCase } from "./FindSupermarketByNameUseCase";
 
 let findSupermarketByNameUseCase: FindSupermarketByNameUseCase;
 let supermarketsRepositoryInMemory: SupermarketsRepositoryInMemory;
+let validateProvider: IValidateProvider;
 
 describe("Find supermarket by name useCase", () => {
     beforeEach(() => {
         supermarketsRepositoryInMemory = new SupermarketsRepositoryInMemory();
-        findSupermarketByNameUseCase = new FindSupermarketByNameUseCase(supermarketsRepositoryInMemory)
+        validateProvider = new ValidateProvider();
+        findSupermarketByNameUseCase = new FindSupermarketByNameUseCase(
+            supermarketsRepositoryInMemory,
+            validateProvider
+        )
     })
 
 

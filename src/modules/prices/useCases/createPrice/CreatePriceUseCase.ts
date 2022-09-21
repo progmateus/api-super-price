@@ -73,6 +73,13 @@ class CreatePriceUseCase {
 
         const supermarketLowerCase = supermarket_name.toLowerCase()
 
+
+        const isInvalidSupermarketName = await this.validateProvider.validateSupermarketName(supermarketLowerCase)
+
+        if (isInvalidSupermarketName === true) {
+            throw new AppError("Invalid supermarket name", 400)
+        }
+
         let supermarket = await this.supermarketsRepository.findByName(supermarketLowerCase);
 
         if (!supermarket) {

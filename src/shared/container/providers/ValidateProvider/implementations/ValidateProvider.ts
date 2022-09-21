@@ -95,6 +95,14 @@ class ValidateProvider implements IValidateProvider {
         return concat === gtin
     }
 
+    async validateSupermarketName(name: string): Promise<boolean> {
+        const xssRegex = /(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig
+
+        const isInvalid = xssRegex.test(name);
+
+        return isInvalid
+    }
+
     async uuidValidateV4(id: string): Promise<boolean> {
         return uuidValidate(id) && uuidVersion(id) === 4;
     }

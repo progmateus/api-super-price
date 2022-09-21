@@ -62,7 +62,16 @@ class FindPriceUseCase {
 
 
         if (supermarket_name) {
-            const supermarket = await this.supermarketsRepository.findByName(supermarket_name.toLocaleLowerCase());
+
+            const supermarketLowerCase = supermarket_name.toLocaleLowerCase()
+
+            const isInvalidSupermarketName = await this.validateProvider.validateSupermarketName(supermarketLowerCase)
+
+            if (isInvalidSupermarketName === true) {
+                throw new AppError("Invalid supermarket name", 400)
+            }
+
+            const supermarket = await this.supermarketsRepository.findByName(supermarketLowerCase);
 
             if (!supermarket) {
                 return ([])

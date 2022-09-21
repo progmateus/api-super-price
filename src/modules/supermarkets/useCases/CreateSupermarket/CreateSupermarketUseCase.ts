@@ -2,6 +2,7 @@ import { AppError } from "@errors/AppError";
 import { ICreateSupermarketDTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
 import { Supermarket } from "@modules/supermarkets/infra/typeorm/entities/Supermarket";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
+import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
 import { inject, injectable } from "tsyringe";
 
 
@@ -10,7 +11,10 @@ class CreateSupermarketUseCase {
 
     constructor(
         @inject("SupermarketsRepository")
-        private supermarketsRepository: ISupermarketsRepository
+        private supermarketsRepository: ISupermarketsRepository,
+        @inject("ValidateProvider")
+        private validateProvider: IValidateProvider
+
     ) { }
 
     async execute({
@@ -22,6 +26,12 @@ class CreateSupermarketUseCase {
         }
 
         const nameLowerCase = name.toLowerCase();
+
+        const isInvalidSupermarketName = await this.validateProvider.validateSupermarketName(nameLowerCase)
+
+        if (isInvalidSupermarketName === true) {
+            throw new AppError("Invalid supermarket name", 400)
+        }
 
         const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);
 

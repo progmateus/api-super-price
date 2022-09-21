@@ -1,17 +1,25 @@
 import { AppError } from "@errors/AppError";
 import { SupermarketsRepositoryInMemory } from "@modules/supermarkets/repositories/in-memory/SupermarketsRepositoryInMemory";
+import { ValidateProvider } from "@shared/container/providers/ValidateProvider/implementations/ValidateProvider";
+import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
+import { validate } from "uuid";
 import { CreateSupermarketUseCase } from "./CreateSupermarketUseCase";
 
 
 
 let createSupermarketUseCase: CreateSupermarketUseCase;
 let supermarketsRepositoryInMemory: SupermarketsRepositoryInMemory;
+let validateProvider: IValidateProvider;
 
 
 describe("Create Supermarket", () => {
     beforeEach(() => {
         supermarketsRepositoryInMemory = new SupermarketsRepositoryInMemory();
-        createSupermarketUseCase = new CreateSupermarketUseCase(supermarketsRepositoryInMemory)
+        validateProvider = new ValidateProvider();
+        createSupermarketUseCase = new CreateSupermarketUseCase(
+            supermarketsRepositoryInMemory,
+            validateProvider
+        )
     })
 
 
