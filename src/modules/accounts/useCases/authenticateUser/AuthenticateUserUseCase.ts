@@ -62,8 +62,8 @@ class AuthenticateUserUseCase {
             expires_in_token,
             expires_in_refresh_token,
             refresh_token_expires_days,
-            secret_token,
-            secret_refresh_token
+          ///  secret_token,
+          ///  secret_refresh_token
         } = auth
 
         if (!user) {
@@ -76,12 +76,12 @@ class AuthenticateUserUseCase {
             throw new AppError("Email or password incorrect!", 401)
         }
 
-        const token = sign({}, secret_token, {
+        const token = sign({}, process.env.SECRET_TOKEN, {
             subject: user.id,
             expiresIn: expires_in_token
         });
 
-        const refresh_token = sign({}, secret_refresh_token, {
+        const refresh_token = sign({}, process.env.SECRET_REFRESH_TOKEN, {
             subject: user.id,
             expiresIn: expires_in_refresh_token
         })
