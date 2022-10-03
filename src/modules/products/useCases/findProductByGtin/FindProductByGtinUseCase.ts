@@ -3,7 +3,7 @@ import { IProductsRepository } from "@modules/products/repositories/IProductsRep
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
 import { getProductByGtin } from "@services/api";
 import { container, inject, injectable } from "tsyringe";
-import { CreateProductUseCase } from "../createProduct/CreateProductUseCase";
+import { CreateProductUseCase } from "../CreateProduct/CreateProductUseCase";
 
 
 @injectable()

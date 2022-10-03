@@ -1,4 +1,4 @@
-import { CreateProductController } from "@modules/products/useCases/createProduct/CreateProductController";
+import { CreateProductController } from "@modules/products/useCases/CreateProduct/CreateProductController";
 import { DeleteProductController } from "@modules/products/useCases/deleteProduct/DeleteProductController";
 import { FindProductByGtinController } from "@modules/products/useCases/findProductByGtin/FindProductByGtinController";
 import { FindProductByNameController } from "@modules/products/useCases/findProductByName/FindProductByNameController";

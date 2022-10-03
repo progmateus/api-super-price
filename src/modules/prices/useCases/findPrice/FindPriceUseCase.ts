@@ -105,7 +105,6 @@ class FindPriceUseCase {
                 price: {
                     id: mapPrice.id,
                     price: mapPrice.price,
-                    user_id: mapPrice.user_id,
                     created_at: mapPrice.created_at,
                     updated_at: mapPrice.updated_at,
                 },

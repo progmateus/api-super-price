@@ -1123,9 +1123,6 @@
                                 "price":{
                                     "type": "number"
                                 },
-                                "user_id":{
-                                    "type": "string"
-                                },
                                 "created_at":{
                                     "type": "string"
                                 },
