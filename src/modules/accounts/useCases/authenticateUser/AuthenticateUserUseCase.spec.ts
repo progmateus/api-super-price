@@ -18,6 +18,13 @@ let validateProvider: ValidateProvider
 
 
 describe("Authenticate user useCase", () => {
+
+    beforeAll(() => {
+        process.env.SECRET_TOKEN = "secrettoken";
+        process.env.SECRET_REFRESH_TOKEN = "secretrefreshtoken";
+
+    })
+
     beforeEach(() => {
         usersRepositoryInMemory = new UsersRepositoryInMemory();
         validateProvider = new ValidateProvider();
