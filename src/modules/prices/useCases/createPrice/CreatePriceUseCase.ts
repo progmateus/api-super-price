@@ -2,9 +2,11 @@ import { AppError } from "@errors/AppError";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { Price } from "@modules/prices/infra/typeorm/entities/Price";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
+import { CreateProductUseCase } from "@modules/products/useCases/CreateProduct/CreateProductUseCase";
 import { FindProductByGtinUseCase } from "@modules/products/useCases/findProductByGtin/FindProductByGtinUseCase";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { CreateSupermarketUseCase } from "@modules/supermarkets/useCases/CreateSupermarket/CreateSupermarketUseCase";
+import { getProductByGtin } from "@services/api";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
 import { container, inject, injectable } from "tsyringe";
 import { ICreatePriceDTO } from "../../dtos/ICreatePriceDTO";
@@ -65,10 +67,31 @@ class CreatePriceUseCase {
             throw new AppError("Invalid Gtin", 400)
         }
 
-        const product = await this.productsRepository.findByGtin(gtin)
+        let product = await this.productsRepository.findByGtin(gtin)
 
         if (!product) {
-            throw new AppError("Product not found", 404)
+
+            const getProduct = await getProductByGtin(gtin);
+            console.log(getProduct);
+
+            switch (getProduct.status) {
+                case 200:
+                    const createProductUseCase = container.resolve(CreateProductUseCase);
+
+                    product = await createProductUseCase.execute({
+                        name: getProduct.data.description,
+                        brand: getProduct.data.brand?.name,
+                        gtin: getProduct.data.gtin.toString(),
+                        thumbnail: getProduct.data.thumbnail
+                    });
+
+                    break;
+
+                case 404:
+                    throw new AppError("Product not found", 404)
+                default:
+                    throw new AppError("Internal server error", 500)
+            }
         }
 
         const supermarketLowerCase = supermarket_name.toLowerCase()

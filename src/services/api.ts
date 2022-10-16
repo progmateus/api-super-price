@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const tokenBluesoft = process.env.TOKEN_BLUESOFT_COSMOS;
+
 const api = axios.create({
     baseURL: "https://api.cosmos.bluesoft.com.br",
-    headers: { 'X-Cosmos-Token': "ZRoQUFF16c3ZY-hsXqWJ8Q" },
+    headers: { 'X-Cosmos-Token': "DytjRBuVJC5Gmd3dwUZxLA" },
     validateStatus: () => true
 
 })
