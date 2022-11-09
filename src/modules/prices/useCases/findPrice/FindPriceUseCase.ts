@@ -32,7 +32,7 @@ class FindPriceUseCase {
             throw new AppError("Character limit exceeded", 400)
         }
 
-        if (supermarket_name?.length > 50) {
+        if (supermarket_name?.length > 100) {
             throw new AppError("Character limit exceeded", 400)
         }
 

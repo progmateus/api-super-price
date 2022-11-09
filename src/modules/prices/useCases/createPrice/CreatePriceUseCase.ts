@@ -72,7 +72,6 @@ class CreatePriceUseCase {
         if (!product) {
 
             const getProduct = await getProductByGtin(gtin);
-            console.log(getProduct);
 
             switch (getProduct.status) {
                 case 200:
