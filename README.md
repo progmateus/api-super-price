@@ -29,12 +29,14 @@ Superprice é uma aplicação Full Stack web
 - Jest
 ## Front end
 - ReactJS
-- TypeScript
+- Typescript
 - Nextjs
 - HTML / CSS
 - Chakra ui
+- Context API
+- Hooks
 - React virtualized
-- Contexts / Hooks
+
 
 ## Implantação em produção
 - Back end: Heroku
@@ -42,23 +44,26 @@ Superprice é uma aplicação Full Stack web
 - Banco de dados: Postgresql
 
 # Layout
-## 1-  Dashboard
+## 1- Página inicial
+![Pagina inicial](https://github.com/progmateus/assets/blob/main/desktop-initial.jpg?raw=true)
+
+## 2- Dashboard
 ![Dashboard](https://github.com/progmateus/assets/blob/main/desktop-dashboard.jpg?raw=true)
 
-## 2-  Listagem de produtos
-![prices](https://github.com/progmateus/assets/blob/main/desktop-products.jpg?raw=true)
+## 3- Listagem de produtos
+![products](https://github.com/progmateus/assets/blob/main/desktop-products.jpg?raw=true)
 
-## 2-  Informações do produto
+## 4- Informações do produto
 ![prices](https://github.com/progmateus/assets/blob/main/desktop-prices.jpg?raw=true)
 
-## 2-  Escaner de código de barras
-![prices](https://github.com/progmateus/assets/blob/main/desktop-scanner.jpg?raw=true)
+## 5- Escaner de código de barras
+![scanner](https://github.com/progmateus/assets/blob/main/desktop-scanner.jpg?raw=true)
 
-## 3- Atualizar perfil
-![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/desktop-update-user.jpg?raw=true)
+## 6- Atualizar perfil
+![update user](https://github.com/progmateus/assets/blob/main/desktop-update-user.jpg?raw=true)
 
-## 3- Ajustar imagem de perfil
-![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/desktop-crop-avatar.jpg?raw=true)
+## 7- Ajustar imagem de perfil
+![update user avatar](https://github.com/progmateus/assets/blob/main/desktop-crop-avatar.jpg?raw=true)
 
 # Modelo conceitual
 ![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/model.jpg?raw=true)
