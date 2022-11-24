@@ -5,43 +5,66 @@
 
 https://wmazoni-sds1.netlify.app
 
-Superprice é uma aplicação full stack web 
+Superprice é uma aplicação Full Stack web 
 
-A aplicação consiste em uma pesquisa de preferência de games, onde os dados são coletados no app mobile, e depois são listados no app web, que também apresenta um dashboard com gráficos baseados nestes dados.
+ A aplicação permite aos usuarios buscar e comparar o valor de um determinado produto em diversos supermercados, precisando somente escanear ou digitar o código de barras do produto.
 
-A aplicação permite aos usuarios, cadastrar, editar, buscar e comparar os preços de um produto entre os supermercados mais próximos.
+ O cadastro e edição de valores são feitos manualmente pelos usuários pois os supermercados não disponibilizam API's para buscar os valores de suas mercadorias.
 
-O usúario pode optar por buscar pelo gtin do produto ou usar a câmera do celular para escanear o codigo de barras do mesmo, e depois os preços são listados no app web, que também apresenta uma
-pagina com a lista dos preços.
+ A API da aplicação foi desenvolvida em Node.js e possui um CRUD para cada entidade(usuário, produto, supermercado e preço) utilizando o Typeorm para realizar a comunicação com o banco de dados.
+ 
+  Possui um sistema de login utilizando tecnologia JWT. A aplicação também conta com funcionalidades de envio de e-mail para recuperação de senha.
 
+ Foi utilizado o Axios para realizar chamadas a uma API externa para consultar as informações dos produtos, como: Nome, categoria, codito e etc...
 
+ Para a segurança da aplicação, foram limitadas todas as entradas do backend previnindo Buffer overflow, foram validados todos os parametros utilizando Regex para evitar XSS e SQLI. E para evitar o envio de de arquivos maliciosos para a aplicação foi validado o input de avatar do usuário 
 
-## Layout mobile
-![Mobile 1](https://github.com/progmateus/assets/blob/main/mobile-dashboard.png?raw=true) ![Mobile 2](https://github.com/progmateus/assets/blob/main/mobile-prices.png?raw=true) ![Mobile 3](https://github.com/progmateus/assets/blob/main/mobile-scanner.png?raw=true)
-
-## Layout web
-![Web 1](https://github.com/progmateus/assets/blob/main/desktop-dashboard.jpg?raw=true)
-
-![Web 2](https://github.com/progmateus/assets/blob/main/desktop-prices.jpg?raw=true)
-
-## Modelo conceitual
-![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/model.jpg?raw=true)
-
-# Tecnologias utilizadas
+ # Tecnologias utilizadas
 ## Back end
 - Nodejs
-- HTML / CSS / JS / TypeScript
+- Typescript
+- Docker
 - Typeorm
+- JWT
 - Jest
 ## Front end
-- HTML / CSS / JS / TypeScript
 - ReactJS
+- TypeScript
 - Nextjs
+- HTML / CSS
 - Chakra ui
+- React virtualized
+- Contexts / Hooks
+
 ## Implantação em produção
 - Back end: Heroku
 - Front end web: Netlify
 - Banco de dados: Postgresql
+
+# Layout
+## 1-  Dashboard
+![Dashboard](https://github.com/progmateus/assets/blob/main/desktop-dashboard.jpg?raw=true)
+
+## 2-  Listagem de produtos
+![prices](https://github.com/progmateus/assets/blob/main/desktop-products.jpg?raw=true)
+
+## 2-  Informações do produto
+![prices](https://github.com/progmateus/assets/blob/main/desktop-prices.jpg?raw=true)
+
+## 2-  Escaner de código de barras
+![prices](https://github.com/progmateus/assets/blob/main/desktop-scanner.jpg?raw=true)
+
+## 3- Atualizar perfil
+![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/desktop-update-user.jpg?raw=true)
+
+## 3- Ajustar imagem de perfil
+![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/desktop-crop-avatar.jpg?raw=true)
+
+# Modelo conceitual
+![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/model.jpg?raw=true)
+
+# Layout mobile
+![Mobile 1](https://github.com/progmateus/assets/blob/main/mobile-dashboard.png?raw=true) ![Mobile 2](https://github.com/progmateus/assets/blob/main/mobile-prices.png?raw=true) ![Mobile 3](https://github.com/progmateus/assets/blob/main/mobile-scanner.png?raw=true)
 
 
 # Autor
