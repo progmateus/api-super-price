@@ -1,5 +1,6 @@
 node_modules
-tmp
+tmp/*
+!tmp/.gitkeep
 vscode
 .env
 dist
