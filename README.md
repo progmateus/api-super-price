@@ -27,12 +27,13 @@ Superprice é uma aplicação Full Stack web
 - Typeorm
 - JWT
 - Jest
+- Swagger UI
 ## Front end
 - ReactJS
 - Typescript
 - Nextjs
 - HTML / CSS
-- Chakra ui
+- Chakra UI
 - Context API
 - Hooks
 - React virtualized
