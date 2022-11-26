@@ -4,5 +4,6 @@ interface IUserResponseDTO {
     lastname: string;
     email: string;
     avatar?: string;
+    avatar_url(): string
 }
 export { IUserResponseDTO };

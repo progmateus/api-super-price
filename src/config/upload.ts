@@ -2,44 +2,41 @@ import multer from "multer"
 import crypto from "crypto";
 import { resolve } from "path";
 import { AppError } from "@errors/AppError";
-import sharp from "sharp";
+
+const tmpFolder = resolve(__dirname, "..", "..", "tmp")
 
 export default {
+    tmpFolder,
 
-    upload(folder: string) {
+    storage: multer.diskStorage({
 
-        return {
-            storage: multer.diskStorage({
+        destination: tmpFolder,
 
-                destination: resolve(__dirname, "..", "..", folder),
+        filename: (request, file, callback) => {
 
-                filename: (request, file, callback) => {
-
-                    const fileHash = crypto.randomBytes(16).toString("hex");
-                    const filename = `${fileHash}-${file.originalname}`
+            const fileHash = crypto.randomBytes(16).toString("hex");
+            const filename = `${fileHash}-${file.originalname}`
 
 
-                    return callback(null, filename)
-                },
+            return callback(null, filename)
+        },
 
-            }),
+    }),
 
-            fileFilter: (request, file, callback) => {
+    fileFilter: (request, file, callback) => {
 
-                const allowedMimes = [
-                    "image/jpg",
-                    "image/jpeg",
-                    "image/pjpeg",
-                    "image/png",
-                ]
+        const allowedMimes = [
+            "image/jpg",
+            "image/jpeg",
+            "image/pjpeg",
+            "image/png",
+        ]
 
-                if (allowedMimes.includes(file.mimetype)) {
-                    callback(null, true)
-                } else {
-                    callback(new AppError("Invalid file type.", 415))
-                }
-
-            }
+        if (allowedMimes.includes(file.mimetype)) {
+            callback(null, true)
+        } else {
+            callback(new AppError("Invalid file type.", 415))
         }
+
     }
 }

@@ -8,7 +8,7 @@ import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUse
 import { FindUserByEmailController } from "@modules/accounts/useCases/findUserByEmail/FindUserByEmailController";
 import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
 
-const uploadAvatar = multer(uploadConfig.upload("./tmp/avatar"))
+const uploadAvatar = multer(uploadConfig)
 const usersRoutes = Router();
 const createUserController = new CreateUserController();
 const updateUserController = new UpdateUserController

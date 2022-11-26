@@ -47,13 +47,13 @@ Superprice é uma aplicação Full Stack web
 ## 1- Página inicial
 ![Pagina inicial](https://github.com/progmateus/assets/blob/main/desktop-initial.jpg?raw=true)
 
-## 2- Dashboard
-![Dashboard](https://github.com/progmateus/assets/blob/main/desktop-dashboard.jpg?raw=true)
+## 2- Home
+![Home](https://github.com/progmateus/assets/blob/main/desktop-dashboard.jpg?raw=true)
 
 ## 3- Listagem de produtos
 ![products](https://github.com/progmateus/assets/blob/main/desktop-products.jpg?raw=true)
 
-## 4- Informações do produto
+## 4- Preços do produto
 ![prices](https://github.com/progmateus/assets/blob/main/desktop-prices.jpg?raw=true)
 
 ## 5- Escaner de código de barras
