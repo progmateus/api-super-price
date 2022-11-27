@@ -5,9 +5,9 @@ module.exports = {
     "username": process.env.POSTGRES_USER,
     "password": process.env.POSTGRES_PASSWORD,
     "database": process.env.POSTGRES_DB,
-    "migrations": ["src/database/migrations/*.ts"],
+    "migrations": ["src/database/migrations/*.js"],
     "cli": {
         "migrationsDir": "src/database/migrations"
     },
-    "entities": ["./src/modules/**/entities/*.ts"]
+    "entities": ["./src/modules/**/entities/*.js"]
 }
