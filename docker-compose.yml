@@ -6,7 +6,7 @@ services:
     container_name: super_price_database
     restart: always
     ports:
-      - 5432:5432
+      - 65432:5432
     env_file:
     - .env
     volumes:
