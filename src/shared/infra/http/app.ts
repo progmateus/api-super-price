@@ -17,9 +17,7 @@ import upload from "@config/upload";
 createConnection();
 const app = express();
 app.use(express.json())
-app.use(cors({
-    allowedHeaders: "Upgrade-Insecure-Requests: 1"
-}));
+app.use(cors());
 
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
