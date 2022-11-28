@@ -17,14 +17,14 @@ import upload from "@config/upload";
 createConnection();
 const app = express();
 app.use(express.json())
-app.use(cors());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use("/avatar", express.static(`${upload.tmpFolder}/avatar`))
 
-
 app.use(router)
+app.use(cors());
+
 app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {
 
