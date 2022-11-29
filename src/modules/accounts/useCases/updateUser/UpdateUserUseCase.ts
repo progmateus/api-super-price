@@ -109,6 +109,14 @@ class UpdateUserUseCase {
 
         if (password && last_password) {
 
+            if (password.length < 6) {
+                throw new AppError("password must contain at least 6 characters", 400)
+            }
+
+            if (last_password.length < 6) {
+                throw new AppError("last password incorrect!", 400)
+            }
+
             const passwordMatch = await compare(last_password, user.password);
 
             if (!passwordMatch) {

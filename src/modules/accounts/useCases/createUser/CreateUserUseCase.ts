@@ -56,6 +56,10 @@ class CreateUserUseCase {
             throw new AppError("Invalid Email", 400)
         }
 
+        if (password.length < 6) {
+            throw new AppError("password must contain at least 6 characters", 400)
+        }
+
         const user = await this.usersRepository.findByEmail(emailLoweCase);
         if (user) {
             throw new AppError("User already exists!", 409)

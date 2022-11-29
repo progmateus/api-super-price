@@ -30,7 +30,10 @@ class ResetPasswordUserUseCase {
 
         if (!token || !password) {
             throw new AppError("Information missing", 422)
+        }
 
+        if (password.length < 6) {
+            throw new AppError("password must contain at least 6 characters", 400)
         }
 
         const userToken = await this.usersTokensRepository.findByRefreshToken(token)
