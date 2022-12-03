@@ -17,7 +17,7 @@ Superprice é uma aplicação Full Stack web
 
  Foi utilizado o Axios para realizar chamadas a uma API externa para consultar as informações dos produtos, como: Nome, categoria, codito e etc...
 
- Para a segurança da aplicação, foram limitadas todas as entradas do backend previnindo Buffer overflow, foram validados todos os parametros utilizando Regex para evitar XSS e SQLI. E para evitar o envio de de arquivos maliciosos para a aplicação foi validado o input de avatar do usuário 
+ Para a segurança da aplicação, foram limitadas todas as entradas do backend prevenindo Buffer overflow, foram validados todos os parametros utilizando Regex para evitar XSS e SQLI. E para evitar o envio de de arquivos maliciosos para a aplicação foi validado o input de avatar do usuário 
 
  # Tecnologias utilizadas
 ## Back end
