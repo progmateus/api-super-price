@@ -4,6 +4,7 @@ import { IValidateProvider } from "@shared/container/providers/ValidateProvider/
 import { getProductByGtin } from "@services/api";
 import { container, inject, injectable } from "tsyringe";
 import { CreateProductUseCase } from "../CreateProduct/CreateProductUseCase";
+import { removeAccent } from "@utils/removeAccents";
 
 
 @injectable()
@@ -35,12 +36,15 @@ class FindProductByGtinUseCase {
         if (!product) {
             const getProduct = await getProductByGtin(gtin);
 
+
             switch (getProduct.status) {
                 case 200:
                     const createProductUseCase = container.resolve(CreateProductUseCase);
 
+                    const nameWithoutAccents = removeAccent(getProduct.data.description.toLocaleLowerCase())
+
                     product = await createProductUseCase.execute({
-                        name: getProduct.data.description,
+                        name: nameWithoutAccents,
                         brand: getProduct.data.brand?.name,
                         gtin: getProduct.data.gtin.toString(),
                         thumbnail: getProduct.data.thumbnail

@@ -8,6 +8,7 @@ import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISup
 import { CreateSupermarketUseCase } from "@modules/supermarkets/useCases/CreateSupermarket/CreateSupermarketUseCase";
 import { getProductByGtin } from "@services/api";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
+import { removeAccent } from "@utils/removeAccents";
 import { container, inject, injectable } from "tsyringe";
 import { ICreatePriceDTO } from "../../dtos/ICreatePriceDTO";
 import { IPricesRepository } from "../../repositories/IPricesRepository";
@@ -98,15 +99,17 @@ class CreatePriceUseCase {
 
         const isInvalidSupermarketName = await this.validateProvider.validateSupermarketName(supermarketLowerCase)
 
+        const nameWithotwAccents = removeAccent(supermarketLowerCase)
+
         if (isInvalidSupermarketName === true) {
             throw new AppError("Invalid supermarket name", 400)
         }
 
-        let supermarket = await this.supermarketsRepository.findByName(supermarketLowerCase);
+        let supermarket = await this.supermarketsRepository.findByName(nameWithotwAccents);
 
         if (!supermarket) {
 
-            supermarket = await this.supermarketsRepository.create({ name: supermarketLowerCase })
+            supermarket = await this.supermarketsRepository.create({ name: nameWithotwAccents })
         }
 
 

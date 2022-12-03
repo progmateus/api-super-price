@@ -3,6 +3,7 @@ import { ICreateSupermarketDTO } from "@modules/supermarkets/dtos/ICreateSuperma
 import { Supermarket } from "@modules/supermarkets/infra/typeorm/entities/Supermarket";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
+import { removeAccent } from "@utils/removeAccents";
 import { inject, injectable } from "tsyringe";
 
 
@@ -33,14 +34,16 @@ class CreateSupermarketUseCase {
             throw new AppError("Invalid supermarket name", 400)
         }
 
-        const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);
+        const nameWithotwAccents = removeAccent(nameLowerCase)
+
+        const supermarket = await this.supermarketsRepository.findByName(nameWithotwAccents);
 
         if (supermarket) {
             throw new AppError("Supermarket already exists!", 409);
         }
 
         const supermarketCreated = await this.supermarketsRepository.create({
-            name: nameLowerCase
+            name: nameWithotwAccents
         })
 
         return supermarketCreated;

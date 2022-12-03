@@ -3,6 +3,7 @@ import { ICreateProductDTO } from "@modules/products/dtos/ICreateProductDTO";
 import { Product } from "@modules/products/infra/typeorm/entities/Product";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
+import { removeAccent } from "@utils/removeAccents";
 import { inject, injectable } from "tsyringe";
 
 
@@ -43,9 +44,10 @@ class CreateProductUseCase {
             throw new AppError("Product already exists!", 409)
         }
 
+        const nameWithotwAccents = removeAccent(name.toLocaleLowerCase())
 
         const productCreated = await this.productsRepository.create({
-            name: name.toLowerCase(),
+            name: nameWithotwAccents,
             gtin,
             brand: brand.toLowerCase(),
             thumbnail,

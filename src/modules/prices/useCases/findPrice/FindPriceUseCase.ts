@@ -3,6 +3,7 @@ import { IPricesRepository } from "@modules/prices/repositories/IPricesRepositor
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
+import { removeAccent } from "@utils/removeAccents";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
@@ -71,7 +72,10 @@ class FindPriceUseCase {
                 throw new AppError("Invalid supermarket name", 400)
             }
 
-            const supermarket = await this.supermarketsRepository.findByName(supermarketLowerCase);
+            const nameWithotwAccents = removeAccent(supermarketLowerCase)
+
+
+            const supermarket = await this.supermarketsRepository.findByName(nameWithotwAccents);
 
             if (!supermarket) {
                 return ([])

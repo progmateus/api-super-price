@@ -4,7 +4,7 @@ import { v4 as uuidV4 } from "uuid";
 
 
 async function create() {
-    const connection = await createConnection("localhost")
+    const connection = await createConnection()
     const id = uuidV4();
     const password = await hash(process.env.PASSWORD_SEED_ADMIN, 8)
 

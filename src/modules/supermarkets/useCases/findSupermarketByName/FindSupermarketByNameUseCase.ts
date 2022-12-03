@@ -3,6 +3,7 @@ import { Supermarket } from "@modules/supermarkets/infra/typeorm/entities/Superm
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { ValidateProvider } from "@shared/container/providers/ValidateProvider/implementations/ValidateProvider";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
+import { removeAccent } from "@utils/removeAccents";
 import { inject, injectable } from "tsyringe";
 
 
@@ -29,8 +30,9 @@ class FindSupermarketByNameUseCase {
         if (isInvalidSupermarketName === true) {
             throw new AppError("Invalid supermarket name", 400)
         }
+        const nameWithotwAccents = removeAccent(nameLowerCase)
 
-        const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);
+        const supermarket = await this.supermarketsRepository.findByName(nameWithotwAccents);
 
         if (!supermarket) {
             throw new AppError("Supermarket not found!", 404);
